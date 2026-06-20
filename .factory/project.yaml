@@ -1,0 +1,73 @@
+version: 1
+
+environment: development
+
+execution:
+  # Evita que una historia demasiado grande genere trabajo ilimitado.
+  max_tasks_per_run: 5
+
+  # Implementación inicial + dos intentos de corrección.
+  max_implementation_attempts_per_task: 3
+
+  # Reparaciones después de la revisión técnica.
+  max_review_repairs_per_run: 2
+
+  # Máximo total de llamadas a modelos durante un run.
+  max_total_model_calls_per_run: 40
+
+  max_calls:
+    per_run:
+      intake: 1
+      requirements: 2
+      architect: 2
+      planning: 2
+      reviewer: 2
+      pr: 1
+
+    per_task:
+      developer: 3
+      test: 3
+      diagnostic: 3
+
+budget:
+  # Estos límites deben detener realmente la ejecución.
+  enforcement: hard
+  on_limit: stop_and_checkpoint
+
+  # Total combinado de todos los agentes.
+  max_tokens_per_run: 300000
+
+  # Límite aproximado para una llamada individual.
+  max_input_tokens_per_call: 40000
+  max_output_tokens_per_call: 8000
+
+  # Presupuesto por etapa.
+  max_tokens_per_stage:
+    intake: 10000
+    requirements: 30000
+    design: 45000
+    planning: 25000
+    implementation: 150000
+    testing: 50000
+    review: 30000
+    pr: 10000
+
+  # Presupuesto monetario máximo para una ejecución.
+  max_cost_usd_per_run: 5.00
+
+  # Si el sistema no conoce el precio del modelo,
+  # no debe continuar sin control.
+  unknown_model_price_policy: block
+
+loop:
+  stop_on_repeated_error: true
+  max_identical_error_occurrences: 2
+  require_progress_between_iterations: true
+
+approvals:
+  requirements: required
+  design: required
+  plan: required
+  pull_request: required
+  merge: forbidden
+  deployment: forbidden
