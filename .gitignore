@@ -1,0 +1,45 @@
+
+# Local secrets
+.env
+.env.*
+!.env.example
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Local state
+*.db
+*.sqlite
+*.sqlite3
+
+# Factory runtime
+.factory/runs/
+.factory/cache/
+.factory/logs/
+.factory/checkpoints/
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets and credentials
+credentials.json
+service-account.json
+*.pem
+*.key
