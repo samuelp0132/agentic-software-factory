@@ -1,0 +1,90 @@
+version: 1
+
+defaults:
+  provider: openai
+  model: gpt-5.5-mini
+  temperature: 0.2
+  max_input_tokens: 40000
+  max_output_tokens: 8000
+  fallback:
+    provider: openai
+    model: gpt-5.5-mini
+
+roles:
+  intake:
+    provider: ${INTAKE_PROVIDER:-openai}
+    model: ${INTAKE_MODEL:-gpt-5.5-mini}
+    temperature: 0.2
+    capabilities:
+      - structured_output
+
+  requirements:
+    provider: ${REQUIREMENTS_PROVIDER:-openai}
+    model: ${REQUIREMENTS_MODEL:-gpt-5.5}
+    temperature: 0.3
+    capabilities:
+      - structured_output
+      - long_context
+    fallback:
+      provider: openai
+      model: gpt-5.5-mini
+
+  architect:
+    provider: ${ARCHITECT_PROVIDER:-openai}
+    model: ${ARCHITECT_MODEL:-gpt-5.5}
+    temperature: 0.2
+    capabilities:
+      - structured_output
+      - long_context
+    fallback:
+      provider: openai
+      model: gpt-5.5-mini
+
+  planning:
+    provider: ${PLANNING_PROVIDER:-openai}
+    model: ${PLANNING_MODEL:-gpt-5.5-mini}
+    temperature: 0.2
+    capabilities:
+      - structured_output
+
+  developer:
+    provider: ${DEVELOPER_PROVIDER:-openai}
+    model: ${DEVELOPER_MODEL:-gpt-5.5-mini}
+    temperature: 0.1
+    max_output_tokens: 12000
+    capabilities:
+      - tool_calling
+      - structured_output
+
+  test:
+    provider: ${TEST_PROVIDER:-openai}
+    model: ${TEST_MODEL:-gpt-5.5-mini}
+    temperature: 0.1
+    capabilities:
+      - tool_calling
+      - structured_output
+
+  diagnostic:
+    provider: ${DIAGNOSTIC_PROVIDER:-openai}
+    model: ${DIAGNOSTIC_MODEL:-gpt-5.5-mini}
+    temperature: 0.1
+    capabilities:
+      - structured_output
+
+  reviewer:
+    provider: ${REVIEWER_PROVIDER:-openai}
+    model: ${REVIEWER_MODEL:-gpt-5.5}
+    temperature: 0.1
+    capabilities:
+      - structured_output
+      - long_context
+    fallback:
+      provider: openai
+      model: gpt-5.5-mini
+
+  pr:
+    provider: ${PR_PROVIDER:-openai}
+    model: ${PR_MODEL:-gpt-5.5-mini}
+    temperature: 0.2
+    capabilities:
+      - structured_output
